@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Spring MVC GeekApp</title>
+</head>
+
+<body>
+    <h1>Список задач</h1>
+    <span th:text="${note}"/>
+    <table border="1">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Owner</th>
+            <th>Executor</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!--/*@thymesVar id="tasks" type="java.util.List<erth.lab.entityes.Task>"*/-->
+        <tr th:each="t : ${tasks}">
+            <td th:text="${t.id}"></td>
+            <td th:text="${t.name}"></td>
+            <td th:text="${t.ownerName}"></td>
+            <td th:text="${t.executorName}"></td>
+            <td th:text="${t.description}"></td>
+            <td th:text="${t.status}"></td>
+            <td><a th:href="@{/del/} + ${t.id}"><input type="button" value="Del" /></a></td>
+        </tr>
+        </tbody>
+    </table>
+    <br>
+    <a th:href="@{/add_task}"><input type="button" value="Добавить задачу" /></a>
+    <a th:href="@{/}"><input type="button" value="Обновить список задач" /></a>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <title>Boot App</title>
+
+        <link rel="icon" type="image/png" th:href="@{/favicon.ico}"/>
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+
+    <div class="container">
+    <!--    <div th:replace="~{navigation :: navigation(Home)}" />-->
+
+    <h1>Task tracker</h1>
+    <h2>Фильтр</h2>
+    <form action="#" th:action="@{/filter}" method="post">
+        Статус:
+        <select name="statusId" >
+            <option th:each="s : ${statuses}" th:value="${s.getStatusId()}" th:text="${s.toString()}" th:if="${s.getStatusId() == curStatus}" selected/>
+            <option th:each="s : ${statuses}" th:value="${s.getStatusId()}" th:text="${s.toString()}" th:if="${s.getStatusId() != curStatus}"/>
+        </select>
+
+        <input type="submit" value="Применить фильтр" />
+        <a th:href="@{/}"  th:if="${curStatus != null}"><input type="button" value="Сбросить фильтр" /></a>
+    </form>
+
+    <table border="1">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Owner</th>
+            <th>Executor</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!--/*@thymesVar id="tasks" type="java.util.List<erth.lab.entityes.Task>"*/-->
+        <tr th:each="t : ${tasks}">
+            <td th:text="${t.id}"></td>
+            <td th:text="${t.name}"></td>
+            <td th:text="${t.ownerName}"></td>
+            <td th:text="${t.executorName}"></td>
+            <td th:text="${t.description}"></td>
+            <td th:text="${t.status}"></td>
+            <td><a th:href="@{/task/} + ${t.id}"><input type="button" value="view" /></a></td>
+        </tr>
+        </tbody>
+    </table>
+    <br>
+    <a th:href="@{/add}"><input type="button" value="Добавить задачу" /></a>
+    </div>
+</body>
+</html>
